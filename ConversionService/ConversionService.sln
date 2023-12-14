@@ -1,0 +1,41 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HtmlToPdf.ConversionService.Broker.Consuming", "HtmlToPdf.ConversionService.Broker.Consuming\HtmlToPdf.ConversionService.Broker.Consuming.csproj", "{15EEFFFF-CA33-4C26-A503-AE8BAB353949}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{7BBAE680-C461-4486-A68E-B5FD85902B49}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HtmlToPdf.Common.Broker", "..\_Common\HtmlToPdf.Common.Broker\HtmlToPdf.Common.Broker.csproj", "{FAAEB153-2891-40C1-B3B8-DEBF1A9BC336}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HtmlToPdf.Common.Broker.Contracts", "..\_Common\HtmlToPdf.Common.Broker.Contracts\HtmlToPdf.Common.Broker.Contracts.csproj", "{EF5C6814-DADB-44F3-A7E1-CF59FDD3FFDD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HtmlToPdf.Common.Broker.Consuming", "..\_Common\HtmlToPdf.Common.Broker.Consuming\HtmlToPdf.Common.Broker.Consuming.csproj", "{FE623CFF-D808-405B-BDED-BFB67638AAF0}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{15EEFFFF-CA33-4C26-A503-AE8BAB353949}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{15EEFFFF-CA33-4C26-A503-AE8BAB353949}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{15EEFFFF-CA33-4C26-A503-AE8BAB353949}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{15EEFFFF-CA33-4C26-A503-AE8BAB353949}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FAAEB153-2891-40C1-B3B8-DEBF1A9BC336}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FAAEB153-2891-40C1-B3B8-DEBF1A9BC336}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FAAEB153-2891-40C1-B3B8-DEBF1A9BC336}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FAAEB153-2891-40C1-B3B8-DEBF1A9BC336}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EF5C6814-DADB-44F3-A7E1-CF59FDD3FFDD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EF5C6814-DADB-44F3-A7E1-CF59FDD3FFDD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EF5C6814-DADB-44F3-A7E1-CF59FDD3FFDD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EF5C6814-DADB-44F3-A7E1-CF59FDD3FFDD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FE623CFF-D808-405B-BDED-BFB67638AAF0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FE623CFF-D808-405B-BDED-BFB67638AAF0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FE623CFF-D808-405B-BDED-BFB67638AAF0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FE623CFF-D808-405B-BDED-BFB67638AAF0}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{FAAEB153-2891-40C1-B3B8-DEBF1A9BC336} = {7BBAE680-C461-4486-A68E-B5FD85902B49}
+		{EF5C6814-DADB-44F3-A7E1-CF59FDD3FFDD} = {7BBAE680-C461-4486-A68E-B5FD85902B49}
+		{FE623CFF-D808-405B-BDED-BFB67638AAF0} = {7BBAE680-C461-4486-A68E-B5FD85902B49}
+	EndGlobalSection
+EndGlobal

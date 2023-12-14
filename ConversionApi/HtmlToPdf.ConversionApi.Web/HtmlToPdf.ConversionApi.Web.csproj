@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <RootNamespace>HtmlToPdf.ConversionApi.WebApi</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
+        <PackageReference Include="MassTransit" Version="8.0.16" />
+        <PackageReference Include="MassTransit.RabbitMQ" Version="8.0.16" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\_Common\HtmlToPdf.Common.Broker\HtmlToPdf.Common.Broker.csproj" />
+      <ProjectReference Include="..\HtmlToPdf.ConversionApi.Broker.Producing\HtmlToPdf.ConversionApi.Broker.Producing.csproj" />
+    </ItemGroup>
+
+</Project>
