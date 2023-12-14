@@ -67,7 +67,10 @@ public class FileController : ControllerBase
                 
                 Console.WriteLine($"Sent {nameof(ConvertFileToPdfCommand)}.");
 
-                return Ok();
+                return Ok(new
+                {
+                    FileId = fileId
+                });
             }
 
             section = await reader.ReadNextSectionAsync();

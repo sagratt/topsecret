@@ -10,6 +10,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HtmlToPdf.Common.Broker.Con
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HtmlToPdf.Common.Broker.Consuming", "..\_Common\HtmlToPdf.Common.Broker.Consuming\HtmlToPdf.Common.Broker.Consuming.csproj", "{FE623CFF-D808-405B-BDED-BFB67638AAF0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HtmlToPdf.ConversionService.Business", "HtmlToPdf.ConversionService.Business\HtmlToPdf.ConversionService.Business.csproj", "{58526D5F-5059-4FE8-9D40-1052647A783A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HtmlToPdf.ConversionService.Broker.Producing", "HtmlToPdf.ConversionService.Broker.Producing\HtmlToPdf.ConversionService.Broker.Producing.csproj", "{ED5B59FF-E95E-49AF-AE3B-354A5E4C3DF1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HtmlToPdf.Common.Broker.Producing", "..\_Common\HtmlToPdf.Common.Broker.Producing\HtmlToPdf.Common.Broker.Producing.csproj", "{62B2F52F-555F-4512-8B7B-56050C585C58}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -32,10 +38,23 @@ Global
 		{FE623CFF-D808-405B-BDED-BFB67638AAF0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FE623CFF-D808-405B-BDED-BFB67638AAF0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FE623CFF-D808-405B-BDED-BFB67638AAF0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{58526D5F-5059-4FE8-9D40-1052647A783A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{58526D5F-5059-4FE8-9D40-1052647A783A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{58526D5F-5059-4FE8-9D40-1052647A783A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{58526D5F-5059-4FE8-9D40-1052647A783A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ED5B59FF-E95E-49AF-AE3B-354A5E4C3DF1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ED5B59FF-E95E-49AF-AE3B-354A5E4C3DF1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ED5B59FF-E95E-49AF-AE3B-354A5E4C3DF1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ED5B59FF-E95E-49AF-AE3B-354A5E4C3DF1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{62B2F52F-555F-4512-8B7B-56050C585C58}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{62B2F52F-555F-4512-8B7B-56050C585C58}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{62B2F52F-555F-4512-8B7B-56050C585C58}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{62B2F52F-555F-4512-8B7B-56050C585C58}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{FAAEB153-2891-40C1-B3B8-DEBF1A9BC336} = {7BBAE680-C461-4486-A68E-B5FD85902B49}
 		{EF5C6814-DADB-44F3-A7E1-CF59FDD3FFDD} = {7BBAE680-C461-4486-A68E-B5FD85902B49}
 		{FE623CFF-D808-405B-BDED-BFB67638AAF0} = {7BBAE680-C461-4486-A68E-B5FD85902B49}
+		{62B2F52F-555F-4512-8B7B-56050C585C58} = {7BBAE680-C461-4486-A68E-B5FD85902B49}
 	EndGlobalSection
 EndGlobal

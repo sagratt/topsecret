@@ -1,5 +1,7 @@
 using HtmlToPdf.Common.Broker.DI;
 using HtmlToPdf.ConversionService.Broker.Consuming.Consumers;
+using HtmlToPdf.ConversionService.Broker.Producing.DI;
+using HtmlToPdf.ConversionService.Business.DI;
 
 IHost host = Host.CreateDefaultBuilder(args)
     .ConfigureServices(services =>
@@ -8,6 +10,9 @@ IHost host = Host.CreateDefaultBuilder(args)
         {
             config.AddConsumer<ConvertFileToPdfCommandConsumer>();
         });
+
+        services.AddBrokerProducingServices();
+        services.AddBusinessServices();
     })
     .Build();
 
