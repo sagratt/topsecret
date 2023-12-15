@@ -8,8 +8,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\_Common\HtmlToPdf.Common.Broker.Contracts\HtmlToPdf.Common.Broker.Contracts.csproj" />
-      <ProjectReference Include="..\..\_Common\HtmlToPdf.Common.Broker.Producing\HtmlToPdf.Common.Broker.Producing.csproj" />
+      <ProjectReference Include="..\..\_Common\HtmlToPdf.Common.Broker\HtmlToPdf.Common.Broker.csproj" />
     </ItemGroup>
 
 </Project>

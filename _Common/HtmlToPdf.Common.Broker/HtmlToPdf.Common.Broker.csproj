@@ -14,7 +14,8 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\_Common\HtmlToPdf.Common.Broker.Contracts\HtmlToPdf.Common.Broker.Contracts.csproj" />
+      <Folder Include="Consuming\" />
+      <Folder Include="Contracts\" />
     </ItemGroup>
 
 </Project>

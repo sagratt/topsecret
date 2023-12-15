@@ -1,4 +1,4 @@
-using Common.Broker.Producing.BaseCommandSender.Interfaces;
+using HtmlToPdf.Common.Broker.BaseCommandSender.Interfaces;
 using MassTransit;
 
 namespace HtmlToPdf.Common.Broker.Producing.BaseCommandSender;

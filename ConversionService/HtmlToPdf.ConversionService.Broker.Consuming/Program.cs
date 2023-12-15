@@ -4,7 +4,7 @@ using HtmlToPdf.ConversionService.Broker.Producing.DI;
 using HtmlToPdf.ConversionService.Business.DI;
 
 IHost host = Host.CreateDefaultBuilder(args)
-    .ConfigureServices(services =>
+    .ConfigureServices((hostContext, services) =>
     {
         services.AddCommonBrokerServices(config =>
         {
@@ -12,7 +12,7 @@ IHost host = Host.CreateDefaultBuilder(args)
         });
 
         services.AddBrokerProducingServices();
-        services.AddBusinessServices();
+        services.AddBusinessServices(hostContext.Configuration);
     })
     .Build();
 

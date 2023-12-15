@@ -1,5 +1,6 @@
 using HtmlToPdf.Common.Broker.DI;
 using HtmlToPdf.ConversionApi.Broker.Producing.DI;
+using HtmlToPdfService.ConversionApi.Data.AppDatabase.DI;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +13,7 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddCommonBrokerServices();
 builder.Services.AddBrokerProducingServices();
+builder.Services.AddAppDatabaseServices(builder.Configuration);
 
 builder.Services.AddCors(options =>
 {

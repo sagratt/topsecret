@@ -1,8 +1,12 @@
 using HtmlToPdf.Common.Broker.Contracts.Commands;
+using HtmlToPdf.Common.ErrorMessages;
 using HtmlToPdf.ConversionApi.Broker.Producing.CommandSenders.Interfaces;
+using HtmlToPdfService.Common.Domain.Enums;
+using HtmlToPdfService.ConversionApi.Data.AppDatabase.Context;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Net.Http.Headers;
+using File = HtmlToPdfService.ConversionApi.Data.AppDatabase.Entities.File;
 
 namespace HtmlToPdf.ConversionApi.WebApi.Controllers;
 
@@ -11,20 +15,21 @@ namespace HtmlToPdf.ConversionApi.WebApi.Controllers;
 public class FileController : ControllerBase
 {
     private readonly IConvertFileToPdfCommandSender _convertFileToPdfCommandSender;
+    private readonly ApplicationDatabaseContext _applicationDatabase;
 
-    public FileController(IConvertFileToPdfCommandSender convertFileToPdfCommandSender)
+    public FileController(
+        IConvertFileToPdfCommandSender convertFileToPdfCommandSender,
+        ApplicationDatabaseContext applicationDatabase)
     {
         _convertFileToPdfCommandSender = convertFileToPdfCommandSender;
+        _applicationDatabase = applicationDatabase;
     }
 
     [HttpPost]
     public async Task<IActionResult> Upload()
     {
         var request = HttpContext.Request;
-
-        // validation of Content-Type
-        // 1. first, it must be a form-data request
-        // 2. a boundary should be found in the Content-Type
+        
         if (!request.HasFormContentType ||
             !MediaTypeHeaderValue.TryParse(request.ContentType, out var mediaTypeHeader) ||
             string.IsNullOrEmpty(mediaTypeHeader.Boundary.Value))
@@ -35,9 +40,7 @@ public class FileController : ControllerBase
         var boundary = HeaderUtilities.RemoveQuotes(mediaTypeHeader.Boundary.Value).Value;
         var reader = new MultipartReader(boundary, request.Body);
         var section = await reader.ReadNextSectionAsync();
-
-        // This sample try to get the first file from request and save it
-        // Make changes according to your needs in actual use
+        
         while (section != null)
         {
             var hasContentDispositionHeader = ContentDispositionHeaderValue.TryParse(section.ContentDisposition,
@@ -46,27 +49,27 @@ public class FileController : ControllerBase
             if (hasContentDispositionHeader && contentDisposition!.DispositionType.Equals("form-data") &&
                 !string.IsNullOrEmpty(contentDisposition.FileName.Value))
             {
-                // Don't trust any file name, file extension, and file data from the request unless you trust them completely
-                // Otherwise, it is very likely to cause problems such as virus uploading, disk filling, etc
-                // In short, it is necessary to restrict and verify the upload
-                // Here, we just use the temporary folder and a random file name
-
-                // Get the temporary folder, and combine a random file name with it
                 var fileId = Guid.NewGuid();
-                var fileName = $"{Path.GetRandomFileName()}-{fileId}";
+                var fileName = fileId.ToString();
                 var saveToPath = Path.Combine(Path.GetTempPath(), fileName);
 
                 await using (var targetStream = System.IO.File.Create(saveToPath))
                 {
                     await section.Body.CopyToAsync(targetStream);
                 }
-                
-                Console.WriteLine($"Saved file to {saveToPath}.");
 
-                await _convertFileToPdfCommandSender.Send(new ConvertFileToPdfCommand(fileId, fileName));
-                
-                Console.WriteLine($"Sent {nameof(ConvertFileToPdfCommand)}.");
+                _applicationDatabase.Add(new File
+                {
+                    Id = fileId,
+                    Name = fileName,
+                    Location = saveToPath,
+                    ConversionStatus = FileConversionStatus.ReadyForConversion
+                });
 
+                await _applicationDatabase.SaveChangesAsync();
+
+                await _convertFileToPdfCommandSender.Send(new ConvertFileToPdfCommand(fileId, saveToPath));
+                
                 return Ok(new
                 {
                     FileId = fileId
@@ -75,15 +78,25 @@ public class FileController : ControllerBase
 
             section = await reader.ReadNextSectionAsync();
         }
-
-        // If the code runs to this location, it means that no files have been saved
+        
         return BadRequest("No files data in the request.");
     }
 
     [HttpGet]
     public async Task<IActionResult> CheckStatus(Guid fileId)
     {
-        throw new NotImplementedException();
+        var file = await _applicationDatabase.GetFileById(fileId);
+        if (file is null)
+        {
+            return BadRequest(ErrorMessages.EntityNotFound<File>(fileId));
+        }
+
+        return Ok(new
+        {
+            FileId = file.Id,
+            FileConversionStatus = file.ConversionStatus,
+            FileConversionStatusDescription = file.ConversionStatus.ToString()
+        });
     }
 
     [HttpGet]

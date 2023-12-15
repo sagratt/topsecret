@@ -6,8 +6,4 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
-    <ItemGroup>
-      <ProjectReference Include="..\..\_Common\HtmlToPdf.Common.Broker\HtmlToPdf.Common.Broker.csproj" />
-    </ItemGroup>
-
 </Project>

@@ -1,4 +1,3 @@
-using Common.Broker.Producing.BaseCommandSender;
 using HtmlToPdf.Common.Broker.Contracts.Commands;
 using HtmlToPdf.Common.Broker.Producing.BaseCommandSender;
 using HtmlToPdf.ConversionApi.Broker.Producing.CommandSenders.Interfaces;

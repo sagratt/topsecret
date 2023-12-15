@@ -9,5 +9,6 @@ public static class BrokerProducingServicesRegistrationExtensions
     public static void AddBrokerProducingServices(this IServiceCollection services)
     {
         services.AddScoped<IConversionCompletedEventPublisher, ConversionCompletedEventPublisher>();
+        services.AddScoped<IConversionStartedEventPublisher, ConversionStartedEventPublisher>();
     }
 }
