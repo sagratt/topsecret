@@ -17,8 +17,8 @@ function FileUploadSingle() {
     }
 
     const headers = {
-      "content-type": file.type,
-      "content-length": `${file.size}`, // 👈 Headers need to be a string
+      "Content-Type": file.type,
+      "Content-Length": `${file.size}`, // 👈 Headers need to be a string
       //"Access-Control-Allow-Origin": "*",
       };
       
@@ -26,7 +26,7 @@ function FileUploadSingle() {
       formData.append("file", file);
 
     axios
-      .post("https://localhost:7188/api/File/Upload", formData, { headers })
+      .post("https://localhost:7188/api/file/uploadhtml", formData, { headers })
       .then((res) => res.json())
       .then((data) => console.log(data))
       .catch((err) => console.error(err));

@@ -1,7 +1,7 @@
-using HtmlToPdf.Common.Broker.BaseCommandSender.Interfaces;
+using HtmlToPdf.Common.Broker.Producing.Interfaces;
 using MassTransit;
 
-namespace HtmlToPdf.Common.Broker.Producing.BaseCommandSender;
+namespace HtmlToPdf.Common.Broker.Producing;
 
 public abstract class BrokerCommandSender<TCommand> : IBrokerCommandSender<TCommand>
     where TCommand : class

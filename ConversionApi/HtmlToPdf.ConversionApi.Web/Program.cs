@@ -1,6 +1,9 @@
 using HtmlToPdf.Common.Broker.DI;
+using HtmlToPdf.Common.Configuration;
 using HtmlToPdf.ConversionApi.Broker.Producing.DI;
+using HtmlToPdf.ConversionApi.WebApi.Configuration;
 using HtmlToPdfService.ConversionApi.Data.AppDatabase.DI;
+using Microsoft.AspNetCore.Http.Features;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,14 +18,19 @@ builder.Services.AddCommonBrokerServices();
 builder.Services.AddBrokerProducingServices();
 builder.Services.AddAppDatabaseServices(builder.Configuration);
 
+var myAllowSpecificOrigins = "_myAllowSpecificOrigins";
+
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy(name: "_MyAllowSubdomainPolicy",
+    var corsConfiguration = builder.Configuration.GetSection<CorsConfiguration>();
+    
+    options.AddPolicy(name: myAllowSpecificOrigins,
         policy =>
         {
-            policy.WithOrigins("http://localhost:3000")
+            policy.WithOrigins(corsConfiguration.AllowedOrigins)
                 .SetIsOriginAllowedToAllowWildcardSubdomains();
         });
+    
 });
 
 var app = builder.Build();
@@ -34,7 +42,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseCors();
+app.UseStaticFiles();
+
+app.UseCors(myAllowSpecificOrigins);
 
 app.MapControllers();
 

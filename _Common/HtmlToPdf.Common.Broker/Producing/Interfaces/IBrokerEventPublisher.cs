@@ -1,4 +1,4 @@
-namespace HtmlToPdf.Common.Broker.Producing.BaseEventPublisher.Interfaces;
+namespace HtmlToPdf.Common.Broker.Producing.Interfaces;
 
 public interface IBrokerEventPublisher<in TEvent> where TEvent : class
 {

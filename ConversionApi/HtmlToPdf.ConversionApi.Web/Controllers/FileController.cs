@@ -1,3 +1,4 @@
+using System.Net;
 using HtmlToPdf.Common.Broker.Contracts.Commands;
 using HtmlToPdf.Common.ErrorMessages;
 using HtmlToPdf.ConversionApi.Broker.Producing.CommandSenders.Interfaces;
@@ -26,7 +27,8 @@ public class FileController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> Upload()
+    [RequestSizeLimit(100_000_000)]
+    public async Task<IActionResult> UploadHtml()
     {
         var request = HttpContext.Request;
         
@@ -41,11 +43,15 @@ public class FileController : ControllerBase
         var reader = new MultipartReader(boundary, request.Body);
         var section = await reader.ReadNextSectionAsync();
         
+        ContentDispositionHeaderValue.TryParse(section?.ContentDisposition,
+            out var firstContentDisposition);
+        var originalFileName = firstContentDisposition?.FileName.Value;
+        
         while (section != null)
         {
             var hasContentDispositionHeader = ContentDispositionHeaderValue.TryParse(section.ContentDisposition,
                 out var contentDisposition);
-
+            
             if (hasContentDispositionHeader && contentDisposition!.DispositionType.Equals("form-data") &&
                 !string.IsNullOrEmpty(contentDisposition.FileName.Value))
             {
@@ -61,8 +67,9 @@ public class FileController : ControllerBase
                 _applicationDatabase.Add(new File
                 {
                     Id = fileId,
-                    Name = fileName,
-                    Location = saveToPath,
+                    OriginalFileName = originalFileName ?? "",
+                    StoredFileName = fileName,
+                    StoredFileLocation = saveToPath,
                     ConversionStatus = FileConversionStatus.ReadyForConversion
                 });
 
@@ -100,8 +107,19 @@ public class FileController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<IActionResult> Download(Guid fileId)
+    public async Task<IActionResult> DownloadPdf(Guid fileId)
     {
-        throw new NotImplementedException();
+        var file = await _applicationDatabase.GetFileById(fileId);
+        if (file is null)
+        {
+            return BadRequest(ErrorMessages.EntityNotFound<File>(fileId));
+        }
+
+        return file.ConversionStatus switch
+        {
+            FileConversionStatus.Success => File(System.IO.File.OpenRead(file.ConvertedFileLocation!), "application/pdf", file.ConvertedFileName),
+            FileConversionStatus.InProgress => StatusCode((int)HttpStatusCode.Processing),
+            _ => BadRequest("Something went wrong")
+        };
     }
 }

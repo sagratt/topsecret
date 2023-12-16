@@ -1,4 +1,3 @@
-using HtmlToPdf.Common.Broker.Consuming;
 using HtmlToPdf.Common.Broker.Consuming.BaseConsumer;
 using HtmlToPdf.Common.Broker.Contracts.Commands;
 using HtmlToPdf.Common.Broker.Contracts.Events;
@@ -32,9 +31,10 @@ public class ConvertFileToPdfCommandConsumer : BaseConsumer<ConvertFileToPdfComm
 
         await _conversionStartedEventPublisher.Publish(new ConversionStartedEvent(command.FileId));
 
-        await _fileConversionService.ConvertToPdf(command.FileId, command.FilePath);
+        var convertedFilePath = await _fileConversionService.ConvertToPdf(command.FilePath);
         
-        await _conversionCompletedEventPublisher.Publish(new ConversionCompletedEvent(command.FileId, Success: true));
+        await _conversionCompletedEventPublisher
+            .Publish(new ConversionCompletedEvent(command.FileId, Success: true, FilePath:convertedFilePath));
     }
 
     protected override async Task OnFailure(ConsumeContext<ConvertFileToPdfCommand> context)

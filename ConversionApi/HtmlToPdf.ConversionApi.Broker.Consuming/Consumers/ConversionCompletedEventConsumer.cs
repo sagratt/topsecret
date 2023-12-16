@@ -4,7 +4,6 @@ using HtmlToPdf.Common.ErrorMessages;
 using HtmlToPdf.Common.Exceptions;
 using HtmlToPdfService.Common.Domain.Enums;
 using HtmlToPdfService.ConversionApi.Data.AppDatabase.Context;
-using HtmlToPdfService.ConversionApi.Data.AppDatabase.Entities;
 using MassTransit;
 using File = HtmlToPdfService.ConversionApi.Data.AppDatabase.Entities.File;
 
@@ -37,6 +36,8 @@ public class ConversionCompletedEventConsumer : BaseConsumer<ConversionCompleted
         }
 
         file.ConversionStatus = FileConversionStatus.Success;
+        file.ConvertedFileLocation = message.FilePath;
+        file.ConvertedFileName = Path.GetFileName(message.FilePath);
 
         _applicationDatabase.Update(file);
 

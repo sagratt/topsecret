@@ -1,7 +1,7 @@
-using HtmlToPdf.Common.Broker.Producing.BaseEventPublisher.Interfaces;
+using HtmlToPdf.Common.Broker.Producing.Interfaces;
 using MassTransit;
 
-namespace HtmlToPdf.Common.Broker.Producing.BaseEventPublisher;
+namespace HtmlToPdf.Common.Broker.Producing;
 
 public class BrokerEventPublisher<TEvent> : IBrokerEventPublisher<TEvent>
     where TEvent : class

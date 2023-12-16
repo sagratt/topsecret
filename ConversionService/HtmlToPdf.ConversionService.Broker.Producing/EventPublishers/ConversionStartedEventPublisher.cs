@@ -1,5 +1,5 @@
 using HtmlToPdf.Common.Broker.Contracts.Events;
-using HtmlToPdf.Common.Broker.Producing.BaseEventPublisher;
+using HtmlToPdf.Common.Broker.Producing;
 using HtmlToPdf.ConversionService.Broker.Producing.EventPublishers.Interfaces;
 using MassTransit;
 

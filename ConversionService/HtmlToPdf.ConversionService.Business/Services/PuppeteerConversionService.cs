@@ -13,7 +13,7 @@ public class PuppeteerConversionService : IFileConversionService
         _puppeteerConfiguration = puppeteerConfiguration;
     }
 
-    public async Task ConvertToPdf(Guid fileId, string filePath)
+    public async Task<string> ConvertToPdf(string filePath)
     {
         await using var browser = await Puppeteer.LaunchAsync(new LaunchOptions
         {
@@ -34,5 +34,7 @@ public class PuppeteerConversionService : IFileConversionService
         await using var destinationFile = File.Create(destinationFilePath);
         
         await pdfStream.CopyToAsync(destinationFile);
+
+        return destinationFilePath;
     }
 }

@@ -1,4 +1,4 @@
-namespace HtmlToPdf.Common.Broker.BaseCommandSender.Interfaces;
+namespace HtmlToPdf.Common.Broker.Producing.Interfaces;
 
 public interface IBrokerCommandSender<in TCommand> where TCommand : class
 {

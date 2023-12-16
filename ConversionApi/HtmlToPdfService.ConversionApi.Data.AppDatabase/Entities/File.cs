@@ -6,9 +6,15 @@ public class File
 {
     public Guid Id { get; set; }
 
-    public string Name { get; set; } = null!;
+    public string OriginalFileName { get; set; } = null!;
 
-    public string Location { get; set; } = null!;
+    public string StoredFileName { get; set; } = null!;
+
+    public string? ConvertedFileName { get; set; }
+
+    public string StoredFileLocation { get; set; } = null!;
+    
+    public string? ConvertedFileLocation { get; set; }
 
     public FileConversionStatus ConversionStatus { get; set; }
 }
