@@ -1,9 +1,9 @@
-using HtmlToPdfService.ConversionApi.Data.AppDatabase.Context;
+using HtmlToPdf.ConversionApi.Data.AppDatabase.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace HtmlToPdfService.ConversionApi.Data.AppDatabase.DI;
+namespace HtmlToPdf.ConversionApi.Data.AppDatabase.DI;
 
 public static class DataAppDatabaseServicesRegistrationExtensions
 {

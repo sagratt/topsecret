@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace HtmlToPdfService.ConversionApi.Data.AppDatabase.Migrations
+namespace HtmlToPdf.ConversionApi.Data.AppDatabase.Migrations
 {
     public partial class updatedfile : Migration
     {

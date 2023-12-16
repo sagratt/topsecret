@@ -1,8 +1,9 @@
 using Microsoft.EntityFrameworkCore;
+using File = HtmlToPdf.ConversionApi.Data.AppDatabase.Entities.File;
 
-namespace HtmlToPdfService.ConversionApi.Data.AppDatabase.Context;
+namespace HtmlToPdf.ConversionApi.Data.AppDatabase.Context;
 
-using File = HtmlToPdfService.ConversionApi.Data.AppDatabase.Entities.File;
+using File = File;
 
 public class ApplicationDatabaseContext : DbContext
 {

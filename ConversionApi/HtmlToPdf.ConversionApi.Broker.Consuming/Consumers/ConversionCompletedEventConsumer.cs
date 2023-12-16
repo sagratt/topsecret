@@ -1,18 +1,18 @@
 using HtmlToPdf.Common.Broker.Consuming.BaseConsumer;
 using HtmlToPdf.Common.Broker.Contracts.Events;
+using HtmlToPdf.Common.Domain.Enums;
 using HtmlToPdf.Common.ErrorMessages;
 using HtmlToPdf.Common.Exceptions;
-using HtmlToPdfService.Common.Domain.Enums;
-using HtmlToPdfService.ConversionApi.Data.AppDatabase.Context;
+using HtmlToPdf.ConversionApi.Data.AppDatabase.Context;
 using MassTransit;
-using File = HtmlToPdfService.ConversionApi.Data.AppDatabase.Entities.File;
+using File = HtmlToPdf.ConversionApi.Data.AppDatabase.Entities.File;
 
 namespace HtmlToPdf.ConversionApi.Broker.Consuming.Consumers;
 
 public class ConversionCompletedEventConsumer : BaseConsumer<ConversionCompletedEventConsumer, ConversionCompletedEvent>
 {
     private readonly ApplicationDatabaseContext _applicationDatabase;
-    
+
     public ConversionCompletedEventConsumer(
         ILogger<ConversionCompletedEventConsumer> logger,
         ApplicationDatabaseContext applicationDatabase) : base(logger)

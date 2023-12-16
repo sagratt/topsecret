@@ -13,7 +13,7 @@
     <ItemGroup>
       <ProjectReference Include="..\..\_Common\HtmlToPdf.Common.Broker\HtmlToPdf.Common.Broker.csproj" />
       <ProjectReference Include="..\..\_Common\HtmlToPdf.Common\HtmlToPdf.Common.csproj" />
-      <ProjectReference Include="..\HtmlToPdfService.ConversionApi.Data.AppDatabase\HtmlToPdfService.ConversionApi.Data.AppDatabase.csproj" />
+      <ProjectReference Include="..\HtmlToPdf.ConversionApi.Data.AppDatabase\HtmlToPdf.ConversionApi.Data.AppDatabase.csproj" />
     </ItemGroup>
     
 </Project>

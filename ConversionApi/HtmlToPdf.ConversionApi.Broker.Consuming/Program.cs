@@ -1,6 +1,6 @@
 using HtmlToPdf.Common.Broker.DI;
 using HtmlToPdf.ConversionApi.Broker.Consuming.Consumers;
-using HtmlToPdfService.ConversionApi.Data.AppDatabase.DI;
+using HtmlToPdf.ConversionApi.Data.AppDatabase.DI;
 
 IHost host = Host.CreateDefaultBuilder(args)
     .ConfigureServices((hostContext, services) =>

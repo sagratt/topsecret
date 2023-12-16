@@ -1,6 +1,6 @@
-namespace HtmlToPdfService.ConversionApi.Data.AppDatabase.Entities;
+using HtmlToPdf.Common.Domain.Enums;
 
-using Common.Domain.Enums;
+namespace HtmlToPdf.ConversionApi.Data.AppDatabase.Entities;
 
 public class File
 {

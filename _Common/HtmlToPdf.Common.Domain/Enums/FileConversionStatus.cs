@@ -1,4 +1,4 @@
-namespace HtmlToPdfService.Common.Domain.Enums;
+namespace HtmlToPdf.Common.Domain.Enums;
 
 public enum FileConversionStatus
 {

@@ -1,19 +1,20 @@
 using HtmlToPdf.Common.Broker.Consuming.BaseConsumer;
 using HtmlToPdf.Common.Broker.Contracts.Events;
+using HtmlToPdf.Common.Domain.Enums;
 using HtmlToPdf.Common.ErrorMessages;
 using HtmlToPdf.Common.Exceptions;
-using HtmlToPdfService.Common.Domain.Enums;
-using HtmlToPdfService.ConversionApi.Data.AppDatabase.Context;
+using HtmlToPdf.ConversionApi.Data.AppDatabase.Context;
 using MassTransit;
+using File = HtmlToPdf.ConversionApi.Data.AppDatabase.Entities.File;
 
 namespace HtmlToPdf.ConversionApi.Broker.Consuming.Consumers;
 
-using File = HtmlToPdfService.ConversionApi.Data.AppDatabase.Entities.File;
+using File = File;
 
 public class ConversionStartedEventConsumer : BaseConsumer<ConversionStartedEventConsumer, ConversionStartedEvent>
 {
     private readonly ApplicationDatabaseContext _applicationDatabase;
-    
+
     public ConversionStartedEventConsumer(ILogger<ConversionStartedEventConsumer> logger, ApplicationDatabaseContext applicationDatabase) : base(logger)
     {
         _applicationDatabase = applicationDatabase;
@@ -22,7 +23,7 @@ public class ConversionStartedEventConsumer : BaseConsumer<ConversionStartedEven
     protected override async Task ProcessMessage(ConsumeContext<ConversionStartedEvent> context)
     {
         var message = context.Message;
-        
+
         var file = await _applicationDatabase.GetFileById(message.FileId);
         if (file is null)
         {
