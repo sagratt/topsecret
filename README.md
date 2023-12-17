@@ -34,5 +34,5 @@ ConversionService
 
 Client  
 5. `npm install --prefix .\client hmtl-to-pdf-client`
-5. `npm start --prefix .\client`  
-6. Check *CorsConfiguration:AllowedOrigins* configuration in *.\ConversionApi\HtmlToPdf.ConversionApi.Web\appsettings.json*. It needs to contain the address of client site.
+6. `npm start --prefix .\client`  
+7. Check *CorsConfiguration:AllowedOrigins* configuration in *.\ConversionApi\HtmlToPdf.ConversionApi.Web\appsettings.json*. It needs to contain the address of client site.
