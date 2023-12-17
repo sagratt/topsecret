@@ -3,7 +3,7 @@ import {ChangeEvent, FormEvent, useEffect, useState} from "react";
 import {MessageInfo, MessageType} from "./types/Message";
 import {CheckFileStatusApiResponse, FileConversionStatus, UploadFileApiResponse} from "./types/ApiResponses";
 import {FileInfo} from "./types/FileInfo";
-import axios from "axios";
+import axios, {AxiosError} from "axios";
 
 import {Button, Container, Form, Header, Message, Table,} from "semantic-ui-react";
 
@@ -129,7 +129,8 @@ const FileUploader = () => {
             // Очищаем ссылку после скачивания
             link.parentNode?.removeChild(link);
         } catch (error) {
-            showMessage(MessageType.Negative, `Ошибка при скачивании файла. ${error} ${await error.response.data.text()}`);
+            const err = error as AxiosError
+            showMessage(MessageType.Negative, `Ошибка при скачивании файла. ${error} ${err.response?.data}`);
             console.error("Download error:", error);
         }
     };
@@ -145,7 +146,8 @@ const FileUploader = () => {
 
             return response.data as CheckFileStatusApiResponse;
         } catch (error) {
-            showMessage(MessageType.Negative, `Ошибка при проверке статуса файла файла. ${error} ${await error.response.data.text()}`);
+            const err = error as AxiosError
+            showMessage(MessageType.Negative, `Ошибка при проверке статуса файла файла. ${error} ${err.response?.data}`);
             console.error("Check file status error:", error);
             throw error;
         }

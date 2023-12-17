@@ -13,7 +13,7 @@ enum FileConversionStatus {
 }
 
 export {
-    UploadFileApiResponse,
-    CheckFileStatusApiResponse,
+    type UploadFileApiResponse,
+    type CheckFileStatusApiResponse,
     FileConversionStatus
 };

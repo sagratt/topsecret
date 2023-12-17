@@ -4,4 +4,4 @@ type FileInfo = {
     uploadTime: Date
 }
 
-export {FileInfo}
+export { type FileInfo } ;

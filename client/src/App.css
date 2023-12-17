@@ -1,20 +1,5 @@
 .App {
   text-align: center;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  flex-direction: column;
-}
-
-input[type="file"] {
-  margin-bottom: 10px;
-}
-
-ul {
-  list-style: none;
-  padding: 0;
-  text-align: left;
 }
 
 .App-logo {
@@ -50,10 +35,4 @@ ul {
   to {
     transform: rotate(360deg);
   }
-}
-
-body {
-  background-color: #e0f2f1;
-  margin: 0;
-  font-family: Arial, sans-serif;
 }

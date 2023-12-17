@@ -9,5 +9,6 @@ enum MessageType {
 }
 
 export {
-    MessageInfo, MessageType
+    type MessageInfo,
+    MessageType
 }
