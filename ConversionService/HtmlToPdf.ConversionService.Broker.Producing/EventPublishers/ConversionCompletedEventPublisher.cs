@@ -7,8 +7,7 @@ namespace HtmlToPdf.ConversionService.Broker.Producing.EventPublishers;
 
 public class ConversionCompletedEventPublisher: BrokerEventPublisher<ConversionCompletedEvent>, IConversionCompletedEventPublisher
 {
-    public ConversionCompletedEventPublisher(IPublishEndpoint publishEndpoint)
-        : base(publishEndpoint)
+    public ConversionCompletedEventPublisher(IPublishEndpoint publishEndpoint) : base(publishEndpoint)
     {
     }
 }

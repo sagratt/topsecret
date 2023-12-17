@@ -4,15 +4,16 @@ using HtmlToPdf.ConversionApi.Broker.Producing.CommandSenders.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Net.Http.Headers;
-using System.Net;
 using HtmlToPdf.Common.Domain.Enums;
 using HtmlToPdf.ConversionApi.Data.AppDatabase.Context;
+using HtmlToPdf.ConversionApi.WebApi.ViewModels;
 using File = HtmlToPdf.ConversionApi.Data.AppDatabase.Entities.File;
+using IOFile = System.IO.File;
 
 namespace HtmlToPdf.ConversionApi.WebApi.Controllers;
 
 [ApiController]
-[Route("api/[controller]/[action]")]
+[Route("api/[controller]")]
 public class FileController : ControllerBase
 {
     private readonly IConvertFileToPdfCommandSender _convertFileToPdfCommandSender;
@@ -27,12 +28,13 @@ public class FileController : ControllerBase
     }
 
     [HttpPost]
-    [RequestSizeLimit(100_000_000)]
+    [RequestSizeLimit(500_000_000)]
     public async Task<IActionResult> UploadHtml()
     {
         var request = HttpContext.Request;
 
-        if (!request.HasFormContentType || !MediaTypeHeaderValue.TryParse(request.ContentType, out var mediaTypeHeader)
+        if (!request.HasFormContentType
+            || !MediaTypeHeaderValue.TryParse(request.ContentType, out var mediaTypeHeader)
             || string.IsNullOrEmpty(mediaTypeHeader.Boundary.Value))
         {
             return new UnsupportedMediaTypeResult();
@@ -46,14 +48,14 @@ public class FileController : ControllerBase
 
         while (section != null)
         {
-            var hasContentDispositionHeader = ContentDispositionHeaderValue.TryParse(section.ContentDisposition,
-                out var contentDisposition);
+            var hasContentDispositionHeader
+                = ContentDispositionHeaderValue.TryParse(section.ContentDisposition, out var contentDisposition);
 
             if (ReachedFileEnd(hasContentDispositionHeader, contentDisposition))
             {
                 var (fileId, fileName, saveToPath) = CreateFileInfo();
 
-                await using (var targetStream = System.IO.File.Create(saveToPath))
+                await using (var targetStream = IOFile.Create(saveToPath))
                 {
                     await section.Body.CopyToAsync(targetStream);
                 }
@@ -62,20 +64,17 @@ public class FileController : ControllerBase
 
                 await SendConvertFileToPdfCommand(fileId, saveToPath);
 
-                return Ok(new
-                {
-                    FileId = fileId
-                });
+                return Ok(fileId);
             }
 
             section = await reader.ReadNextSectionAsync();
         }
 
-        return BadRequest("No files data in the request.");
+        return BadRequest(ErrorMessages.NoFileInRequest);
     }
 
-    [HttpGet]
-    public async Task<IActionResult> CheckStatus(Guid fileId)
+    [HttpGet("{fileId:guid}/status")]
+    public async Task<IActionResult> CheckStatus([FromRoute] Guid fileId)
     {
         var file = await _applicationDatabase.GetFileById(fileId);
         if (file is null)
@@ -83,32 +82,30 @@ public class FileController : ControllerBase
             return BadRequest(ErrorMessages.EntityNotFound<File>(fileId));
         }
 
-        return Ok(new
+        var responseViewModel = new FileConversionStatusResponseViewModel
         {
-            FileId = file.Id,
-            FileConversionStatus = file.ConversionStatus,
-            FileConversionStatusDescription = file.ConversionStatus.ToString()
-        });
-    }
-
-    [HttpGet]
-    public async Task<IActionResult> DownloadPdf(Guid fileId)
-    {
-        var file = await _applicationDatabase.GetFileById(fileId);
-        if (file is null)
-        {
-            return BadRequest(ErrorMessages.EntityNotFound<File>(fileId));
-        }
-
-        return file.ConversionStatus switch
-        {
-            FileConversionStatus.Success => File(
-                System.IO.File.OpenRead(file.ConvertedFileLocation!),
-                "application/pdf",
-                file.ConvertedFileName),
-            FileConversionStatus.InProgress => StatusCode((int)HttpStatusCode.Processing),
-            _ => BadRequest("Something went wrong")
+            FileId = fileId,
+            ConversionStatus = file.ConversionStatus
         };
+
+        return Ok(responseViewModel);
+    }
+
+    [HttpGet("{fileId:guid}")]
+    public async Task<IActionResult> DownloadPdf([FromRoute] Guid fileId)
+    {
+        var file = await _applicationDatabase.GetFileById(fileId);
+        if (file is null)
+        {
+            return BadRequest(ErrorMessages.EntityNotFound<File>(fileId));
+        }
+
+        if (file.ConversionStatus != FileConversionStatus.Success)
+        {
+            return BadRequest(ErrorMessages.FileIsNotReadyForDownload(file.Id));
+        }
+
+        return File(IOFile.OpenRead(file.ConvertedFileLocation!), "application/pdf", file.ConvertedFileName);
     }
 
     #region Private methods
