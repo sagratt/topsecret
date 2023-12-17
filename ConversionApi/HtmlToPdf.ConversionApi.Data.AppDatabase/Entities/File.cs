@@ -13,7 +13,7 @@ public class File
     public string? ConvertedFileName { get; set; }
 
     public string StoredFileLocation { get; set; } = null!;
-    
+
     public string? ConvertedFileLocation { get; set; }
 
     public FileConversionStatus ConversionStatus { get; set; }

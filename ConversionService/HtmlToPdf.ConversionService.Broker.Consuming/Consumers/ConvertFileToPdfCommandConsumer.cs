@@ -12,7 +12,7 @@ public class ConvertFileToPdfCommandConsumer : BaseConsumer<ConvertFileToPdfComm
     private readonly IFileConversionService _fileConversionService;
     private readonly IConversionCompletedEventPublisher _conversionCompletedEventPublisher;
     private readonly IConversionStartedEventPublisher _conversionStartedEventPublisher;
-    
+
     public ConvertFileToPdfCommandConsumer(
         ILogger<ConvertFileToPdfCommandConsumer> logger,
         IFileConversionService fileConversionService,
@@ -32,15 +32,15 @@ public class ConvertFileToPdfCommandConsumer : BaseConsumer<ConvertFileToPdfComm
         await _conversionStartedEventPublisher.Publish(new ConversionStartedEvent(command.FileId));
 
         var convertedFilePath = await _fileConversionService.ConvertToPdf(command.FilePath);
-        
+
         await _conversionCompletedEventPublisher
-            .Publish(new ConversionCompletedEvent(command.FileId, Success: true, FilePath:convertedFilePath));
+            .Publish(new ConversionCompletedEvent(command.FileId, Success: true, FilePath: convertedFilePath));
     }
 
     protected override async Task OnFailure(ConsumeContext<ConvertFileToPdfCommand> context)
     {
         var command = context.Message;
-        
+
         await _conversionCompletedEventPublisher.Publish(new ConversionCompletedEvent(command.FileId, Success: false));
     }
 }

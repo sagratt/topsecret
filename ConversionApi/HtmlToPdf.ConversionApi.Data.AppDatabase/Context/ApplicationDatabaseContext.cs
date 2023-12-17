@@ -8,11 +8,11 @@ using File = File;
 public class ApplicationDatabaseContext : DbContext
 {
     public DbSet<File> Files => Set<File>();
-    
+
     public ApplicationDatabaseContext(DbContextOptions<ApplicationDatabaseContext> options) : base(options)
     {
     }
-    
+
     public Task<File?> GetFileById(Guid id)
     {
         return Files.Where(e => e.Id == id).FirstOrDefaultAsync();

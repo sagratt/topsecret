@@ -1,40 +1,40 @@
-using System.Reflection;
 using HtmlToPdf.Common.Broker.Contracts.Commands;
 using HtmlToPdf.Common.Broker.NameFormatters;
 using MassTransit;
 using Microsoft.Extensions.DependencyInjection;
+using System.Reflection;
 
 namespace HtmlToPdf.Common.Broker.DI;
 
 public static class CommonBrokerServicesRegistrationExtensions
 {
     private static readonly IEntityNameFormatter EntityNameFormatter = new KebabCaseEntityNameFormatter();
-    
+
     public static void AddCommonBrokerServices(this IServiceCollection services, Action<IBusRegistrationConfigurator>? individualConfig = null)
     {
         ConfigureEndpointConventions("exchange");
-        
+
         services.AddMassTransit(options =>
         {
             options.SetKebabCaseEndpointNameFormatter();
-            
+
             individualConfig?.Invoke(options);
-            
+
             options.UsingRabbitMq((context, cfg) =>
             {
                 cfg.ConfigureEndpoints(context);
-                
+
                 cfg.MessageTopology.SetEntityNameFormatter(EntityNameFormatter);
             });
         });
     }
-    
+
     private static void ConfigureEndpointConventions(string address)
     {
         var commandsAssembly = typeof(ConvertFileToPdfCommand).Assembly;
         var commandsNamespace = typeof(ConvertFileToPdfCommand).Namespace;
         const string commandsSuffix = "Command";
-        
+
         var commandTypes = commandsAssembly.GetTypes()
             .Where(t => t.IsClass && t.Namespace == commandsNamespace && t.Name.EndsWith(commandsSuffix))
             .ToList();

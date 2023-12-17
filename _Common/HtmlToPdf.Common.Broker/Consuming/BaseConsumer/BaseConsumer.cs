@@ -8,7 +8,7 @@ public abstract class BaseConsumer<TConsumer, TMessage> : IConsumer<TMessage>
     where TConsumer : IConsumer<TMessage>
 {
     private readonly ILogger<TConsumer> _logger;
-    
+
     protected BaseConsumer(ILogger<TConsumer> logger)
     {
         _logger = logger;
@@ -29,13 +29,13 @@ public abstract class BaseConsumer<TConsumer, TMessage> : IConsumer<TMessage>
                 $"Message Broker Consume START [{typeof(TConsumer).Name}]. {Environment.NewLine}" +
                 $"CorrelationId: {context.CorrelationId} {Environment.NewLine}" +
                 $"Consumed message type: {typeof(TMessage).Name} {Environment.NewLine}");
-            
+
             await ProcessMessage(context);
         }
         catch (Exception exception)
         {
             await OnFailure(context);
-            
+
             _logger.LogError(exception,
                 $"Message Broker Consume ERROR [{typeof(TConsumer).Name}]. {Environment.NewLine}" +
                 $"CorrelationId: {context.CorrelationId} {Environment.NewLine}" +

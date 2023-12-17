@@ -1,20 +1,37 @@
-# Introduction 
-TODO: Give a short introduction of your project. Let this section explain the objectives or the motivation behind this project. 
+### Technologies:
+Server: .NET 6 WebApi, .NET 6 Worker, MassTransit(RabbitMQ), EF(MSSQL)
 
-# Getting Started
-TODO: Guide users through getting your code up and running on their own system. In this section you can talk about:
-1.	Installation process
-2.	Software dependencies
-3.	Latest releases
-4.	API references
+Client: React(create-react-app), SemanticUI, Axios, TypeScript
 
-# Build and Test
-TODO: Describe and show how to build your code and run the tests. 
+### Architecture
+Backend is split into two parts, ConversionApi and ConversionService.
 
-# Contribute
-TODO: Explain how other users and developers can contribute to make your code better. 
+ConversionApi:  
+- Communicates with the client
+- Accepts files, returns converted files, returns conversion status
+- Writes file information(name, location, conversion status) to database
 
-If you want to learn more about creating good readme files then refer the following [guidelines](https://docs.microsoft.com/en-us/azure/devops/repos/git/create-a-readme?view=azure-devops). You can also seek inspiration from the below readme files:
-- [ASP.NET Core](https://github.com/aspnet/Home)
-- [Visual Studio Code](https://github.com/Microsoft/vscode)
-- [Chakra Core](https://github.com/Microsoft/ChakraCore)
+ConversionService:  
+- Converts files to pdf
+
+ConversionApi and ConversionService communicate via message broker.  
+ConversionApi sends commands to convert the file.  
+ConversionService notifies ConversionApi when it starts and finishes file conversion process.  
+ConversionApi updates conversion status in the db.  
+Client checks conversion status before download.  
+
+### How to run
+
+0. Requires RabbitMq,  MSSQL Server, NodeJs
+
+ConversionApi  
+1. Check database connection string in *.\ConversionApi\HtmlToPdf.ConversionApi.Web\appsettings.json*   
+2. `dotnet run --project .\ConversionApi\HtmlToPdf.ConversionApi.Web\HtmlToPdf.ConversionApi.Web.csproj`  
+3. `dotnet run --project .\ConversionApi\HtmlToPdf.ConversionApi.Broker.Consuming\HtmlToPdf.ConversionApi.Broker.Consuming.csproj`  
+
+ConversionService
+4. `dotnet run --project .\ConversionService\HtmlToPdf.ConversionService.Broker.Consuming\HtmlToPdf.ConversionService.Broker.Consuming.csproj`
+
+Client  
+5. `npm start --prefix .\Client`  
+6. Check *CorsConfiguration:AllowedOrigins* configuration in *.\ConversionApi\HtmlToPdf.ConversionApi.Web\appsettings.json*. It needs to contain the address of client site.

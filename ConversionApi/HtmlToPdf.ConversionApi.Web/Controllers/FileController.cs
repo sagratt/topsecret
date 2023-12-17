@@ -1,12 +1,12 @@
 using HtmlToPdf.Common.Broker.Contracts.Commands;
+using HtmlToPdf.Common.Domain.Enums;
 using HtmlToPdf.Common.ErrorMessages;
 using HtmlToPdf.ConversionApi.Broker.Producing.CommandSenders.Interfaces;
+using HtmlToPdf.ConversionApi.Data.AppDatabase.Context;
+using HtmlToPdf.ConversionApi.WebApi.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Net.Http.Headers;
-using HtmlToPdf.Common.Domain.Enums;
-using HtmlToPdf.ConversionApi.Data.AppDatabase.Context;
-using HtmlToPdf.ConversionApi.WebApi.ViewModels;
 using File = HtmlToPdf.ConversionApi.Data.AppDatabase.Entities.File;
 using IOFile = System.IO.File;
 
@@ -49,7 +49,8 @@ public class FileController : ControllerBase
         while (section != null)
         {
             var hasContentDispositionHeader
-                = ContentDispositionHeaderValue.TryParse(section.ContentDisposition, out var contentDisposition);
+                = ContentDispositionHeaderValue
+                    .TryParse(section.ContentDisposition, out var contentDisposition);
 
             if (ReachedFileEnd(hasContentDispositionHeader, contentDisposition))
             {

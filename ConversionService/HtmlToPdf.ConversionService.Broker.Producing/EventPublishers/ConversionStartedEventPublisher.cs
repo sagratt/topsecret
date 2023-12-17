@@ -5,7 +5,7 @@ using MassTransit;
 
 namespace HtmlToPdf.ConversionService.Broker.Producing.EventPublishers;
 
-public class ConversionStartedEventPublisher: BrokerEventPublisher<ConversionStartedEvent>, IConversionStartedEventPublisher
+public class ConversionStartedEventPublisher : BrokerEventPublisher<ConversionStartedEvent>, IConversionStartedEventPublisher
 {
     public ConversionStartedEventPublisher(IPublishEndpoint publishEndpoint) : base(publishEndpoint)
     {

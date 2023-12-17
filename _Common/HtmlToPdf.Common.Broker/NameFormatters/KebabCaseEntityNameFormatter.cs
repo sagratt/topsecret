@@ -9,7 +9,7 @@ public class KebabCaseEntityNameFormatter : IEntityNameFormatter
         var formatter = KebabCaseEndpointNameFormatter.Instance;
         var name = typeof(T).Name;
         var formattedName = $"{formatter.SanitizeName(name)}-outgoing";
-        
+
         return formattedName;
     }
 }
