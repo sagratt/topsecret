@@ -1,8 +1,10 @@
 using HtmlToPdf.Common.Broker.DI;
 using HtmlToPdf.Common.Configuration;
 using HtmlToPdf.ConversionApi.Broker.Producing.DI;
+using HtmlToPdf.ConversionApi.Data.AppDatabase.Context;
 using HtmlToPdf.ConversionApi.Data.AppDatabase.DI;
 using HtmlToPdf.ConversionApi.WebApi.Configuration;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -46,5 +48,9 @@ app.UseStaticFiles();
 app.UseCors(myAllowSpecificOrigins);
 
 app.MapControllers();
+
+using var serviceScope = app.Services.GetRequiredService<IServiceScopeFactory>().CreateScope();
+var mainDbContext = serviceScope.ServiceProvider.GetRequiredService<ApplicationDatabaseContext>();
+mainDbContext.Database.Migrate();
 
 app.Run();
