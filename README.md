@@ -33,6 +33,7 @@ ConversionService
 4. `dotnet run --project .\ConversionService\HtmlToPdf.ConversionService.Broker.Consuming\HtmlToPdf.ConversionService.Broker.Consuming.csproj`
 
 Client  
-5. `npm install --prefix .\client hmtl-to-pdf-client`  
-6. `npm start --prefix .\client`  
-7. Check *CorsConfiguration:AllowedOrigins* configuration in *.\ConversionApi\HtmlToPdf.ConversionApi.Web\appsettings.json*. It needs to contain the address of client site.
+5. `cd .\client`
+6. `npm install`  
+7. `npm start`  
+8. Check *CorsConfiguration:AllowedOrigins* configuration in *.\ConversionApi\HtmlToPdf.ConversionApi.Web\appsettings.json*.  It needs to contain the address of client site. Update and restart *HtmlToPdf.ConversionApi.Web* if needed.
